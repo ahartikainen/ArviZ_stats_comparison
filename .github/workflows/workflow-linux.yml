@@ -49,7 +49,7 @@ jobs:
 
       - name: Install R dependencies (git)
         run: |
-          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "", build_vignettes=FALSE)'
+          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
         if: matrix.use-git
 
       - name: RStan and ArviZ versions
