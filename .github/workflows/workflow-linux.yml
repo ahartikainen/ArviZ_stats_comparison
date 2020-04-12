@@ -1,0 +1,58 @@
+name: Linux
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+        r-version: [3.6.3]
+        use-git : [true, false]
+    steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r-version }}
+
+      - name: Install python dependencies (pip)
+        run: |
+          pip install --upgrade pip
+          pip install arviz
+        if: "!matrix.use-git"
+
+      - name: Install python dependencies (git)
+        run: |
+          pip install --upgrade pip
+          pip install git+git://github.com/arviz-devs/arviz.git
+        if: matrix.use-git
+
+      - name: Set up toolchain for R
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev
+
+          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC CXX14=g++" >> "${HOME}/.R"
+          Rscript -e 'install.packages("remotes")'
+
+      - name: Install R dependencies (cran)
+        run: |
+          Rscript -e 'install.packages("rstan", type = "source")'
+        if: "!matrix.use-git"
+
+      - name: Install R dependencies (git)
+        run: |
+          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "", build_vignettes=FALSE)'
+        if: matrix.use-git
+
+      - name: RStan and ArviZ versions
+        run: |
+          python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
+          Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
