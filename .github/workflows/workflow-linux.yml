@@ -12,6 +12,8 @@ jobs:
         r-version: [3.6.3]
         use-git : [true, false]
     steps:
+      - name: Checkout github
+        uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
