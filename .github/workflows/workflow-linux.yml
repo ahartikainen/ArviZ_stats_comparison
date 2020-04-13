@@ -65,4 +65,5 @@ jobs:
         run: |
           Rscript run_rstan.R
       - name: Run ArviZ 8 schools
+        run: |
           python run_arviz.py
