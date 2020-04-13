@@ -37,7 +37,7 @@ jobs:
       - name: Set up toolchain for R
         run: |
           sudo apt-get update
-          sudo apt-get install libcurl4-openssl-dev
+          sudo apt-get install libcurl4-openssl-dev libv8-dev
 
           printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC CXX14=g++" >> "${HOME}/.R"
           Rscript -e 'install.packages("remotes")'
