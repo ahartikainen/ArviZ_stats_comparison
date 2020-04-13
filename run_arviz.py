@@ -6,7 +6,8 @@ import pandas as pd
 with open("8school_results.json") as f:
     res = json.load(f)
 
-res = {key : np.array(values) for key, values in res.items()}
+print(res)
+res = {key : np.array(values) for key, values in res[0].items()}
 idata = az.from_dict(df_dict)
 print(idata)
 print(az.summary(idata))
