@@ -1,4 +1,5 @@
 library("rstan")
+library("jsonlite")
 
 options(mc.cores = parallel::detectCores())
 
@@ -12,10 +13,10 @@ fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat)
 
 print(fit)
 
-df <- as.data.frame(fit)
-
-print(df)
-
-write.csv(df, "8school_results.csv", row.names = FALSE)
+res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
+write_json(res, "8school_results.json")
 
 print(monitor(fit))
+
+res_monitor = monitor(fit)
+write_json(res_monitor, "8school_results_monitor.json")

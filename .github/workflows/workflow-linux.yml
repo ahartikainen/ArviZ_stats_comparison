@@ -45,6 +45,7 @@ jobs:
           printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
           cat --show-all "${HOME}/.R/Makevars"
           Rscript -e 'install.packages("remotes")'
+          Rscript -e 'install.packages("jsonlite")'
 
       - name: Install R dependencies (cran)
         run: |
@@ -53,6 +54,8 @@ jobs:
 
       - name: Install R dependencies StanHeaders (git)
         run: |
+          Rscript -e 'install.packages("Rcpp")'
+          Rscript -e 'install.packages("RcppEigen")'
           Rscript -e 'install.packages("http://cran.r-project.org/src/contrib/Archive/StanHeaders/StanHeaders_2.21.0-1.tar.gz", repos=NULL, type="source")'
         if: matrix.use-git
 
