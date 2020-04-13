@@ -33,10 +33,10 @@ for (i in 1:dim(res_nowarmup)[3]) {
   ary = matrix(c(res_nowarmup[1:100,1,i], res_nowarmup[1:100,2,i], res_nowarmup[1:100,3,i], res_nowarmup[1:100,4,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
-    rstan::rhat(ary),
+    rstan:::rhat(ary),
     rstan:::rhat_rfun(ary),
-    rstan::ess_bulk(ary),
-    rstan::ess_tail(ary),
+    rstan:::ess_bulk(ary),
+    rstan:::ess_tail(ary),
     rstan:::ess_mean(ary),
     rstan:::ess_sd(ary),
     rstan:::ess_rfun(ary),
