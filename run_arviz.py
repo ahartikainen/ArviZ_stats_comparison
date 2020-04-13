@@ -1,4 +1,5 @@
 import arviz as az
+import numpy as np
 import pandas as pd
 
 df = pd.read_csv("8school_results.csv")
