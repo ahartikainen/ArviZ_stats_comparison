@@ -68,7 +68,7 @@ jobs:
       - name: Extract monitor.R file from RStan
         run: |
           find /usr/local/lib/R/site-library -iname "monitor.R" -type f | xargs cp -t .
-          ls
+          ls -l
 
       - name: RStan and ArviZ versions
         run: |
