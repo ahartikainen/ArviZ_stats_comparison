@@ -41,7 +41,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install libcurl4-openssl-dev libv8-dev
           mkdir -p "${HOME}/.R"
-          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC\nCXX14=g++" >> "${HOME}/.R/Makevars"
+          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> "${HOME}/.R/Makevars"
+          printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
           cat --show-all "${HOME}/.R/Makevars"
           Rscript -e 'install.packages("remotes")'
 
@@ -60,6 +61,8 @@ jobs:
         run: |
           python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
           Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
-      - name: Run 8 schools
+      - name: Run RStan 8 schools
         run: |
           Rscript run_rstan.R
+      - name: Run ArviZ 8 schools
+          python run_arviz.py
