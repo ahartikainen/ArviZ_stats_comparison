@@ -23,11 +23,11 @@ write_json(res_monitor, "8school_results_monitor.json")
 
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
-output <- matrix(ncol=15, nrow=nrows(res_nowarmup))
+output <- matrix(ncol=15, nrow=ncol(res_nowarmup))
 j = 0
 
-for (i in 1:ncols(res)) {
-  ary = matrix(c(res[1:100,i], res[101:200,i], res[201:300,i], res[301:400,i]), 100, 4)
+for (i in 1:ncol(res_nowarmup)) {
+  ary = matrix(c(res_nowarmup[1:100,i], res_nowarmup[101:200,i], res_nowarmup[201:300,i], res_nowarmup[301:400,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
     rhat(ary),
@@ -64,3 +64,4 @@ colnames(df) <- c("rhat_rank",
                   "mcse_quantile10",
                   "mcse_quantile30")
 write.csv(df, "reference_values.csv")
+print(df)
