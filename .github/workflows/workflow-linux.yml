@@ -52,8 +52,7 @@ jobs:
 
       - name: Install R dependencies (git)
         run: |
-          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/StanHeaders", build_opts = "--no-build-vignettes")'
-
+          Rscript -e 'install.packages("http://cran.r-project.org/src/contrib/Archive/StanHeaders/StanHeaders_2.21.0-1.tar.gz", repos=NULL, type="source")'
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
         if: matrix.use-git
 
