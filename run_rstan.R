@@ -11,3 +11,7 @@ schools_dat <- list(J = 8,
 fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat)
 
 print(fit)
+
+print(as.data.frame(fit))
+
+write.csv(as.data.frame(fit), "8school_results.csv", row.names = FALSE)
