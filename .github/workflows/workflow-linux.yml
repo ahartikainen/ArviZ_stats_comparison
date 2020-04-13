@@ -41,7 +41,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install libcurl4-openssl-dev libv8-dev
 
-          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC CXX14=g++" >> "${HOME}/.R"
+          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC\nCXX14=g++" >> "${HOME}/.R/Makevars"
+          cat "${HOME}/.R/Makevars"
           Rscript -e 'install.packages("remotes")'
 
       - name: Install R dependencies (cran)
