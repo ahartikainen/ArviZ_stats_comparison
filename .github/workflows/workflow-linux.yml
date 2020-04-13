@@ -65,6 +65,11 @@ jobs:
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
         if: matrix.use-git
 
+      - name: Extract monitor.R file from RStan
+        run: |
+          find /usr/local/lib/R/site-library -iname "monitor.R" -type f | xargs cp -t .
+          ls
+
       - name: RStan and ArviZ versions
         run: |
           python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
