@@ -12,6 +12,10 @@ fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat)
 
 print(fit)
 
-print(as.data.frame(fit))
+df <- as.data.frame(fit)
 
-write.csv(as.data.frame(fit), "8school_results.csv", row.names = FALSE)
+print(df)
+
+write.csv(df, "8school_results.csv", row.names = FALSE)
+
+print(monitor(fit))
