@@ -7,7 +7,7 @@ with open("8school_results.json") as f:
     res = json.load(f)
 
 print(res)
-res = {key : np.array(values) for key, values in res[0].items()}
+res = {'X' : np.swapaxes(res, 0, 1)}
 idata = az.from_dict(df_dict)
 print(idata)
 print(az.summary(idata))
