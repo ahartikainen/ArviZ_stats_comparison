@@ -33,21 +33,21 @@ for (i in 1:dim(res_nowarmup)[3]) {
   ary = matrix(c(res_nowarmup[1:100,1,i], res_nowarmup[1:100,2,i], res_nowarmup[1:100,3,i], res_nowarmup[1:100,4,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
-    rhat(ary),
-    rhat_rfun(ary),
-    ess_bulk(ary),
-    ess_tail(ary),
-    ess_mean(ary),
-    ess_sd(ary),
-    ess_rfun(ary),
-    ess_quantile(ary, 0.01),
-    ess_quantile(ary, 0.1),
-    ess_quantile(ary, 0.3),
-    mcse_mean(ary),
-    mcse_sd(ary),
-    mcse_quantile(ary, prob=0.01),
-    mcse_quantile(ary, prob=0.1),
-    mcse_quantile(ary, prob=0.3))
+    rstan::rhat(ary),
+    rstan:::rhat_rfun(ary),
+    rstan::ess_bulk(ary),
+    rstan::ess_tail(ary),
+    rstan:::ess_mean(ary),
+    rstan:::ess_sd(ary),
+    rstan:::ess_rfun(ary),
+    rstan:::ess_quantile(ary, 0.01),
+    rstan:::ess_quantile(ary, 0.1),
+    rstan:::ess_quantile(ary, 0.3),
+    rstan:::mcse_mean(ary),
+    rstan:::mcse_sd(ary),
+    rstan:::mcse_quantile(ary, prob=0.01),
+    rstan:::mcse_quantile(ary, prob=0.1),
+    rstan:::mcse_quantile(ary, prob=0.3))
 }
 
 df = data.frame(output)
