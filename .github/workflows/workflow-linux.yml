@@ -52,6 +52,8 @@ jobs:
 
       - name: Install R dependencies (git)
         run: |
+          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/StanHeaders", build_opts = "--no-build-vignettes")'
+
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
         if: matrix.use-git
 
