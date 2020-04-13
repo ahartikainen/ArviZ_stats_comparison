@@ -14,20 +14,23 @@ fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 4, 
 print(fit)
 
 res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
+print(dim(res))
 write_json(res, "8school_results.json")
 
 print(monitor(fit))
 
 res_monitor = monitor(fit)
+print(dim(res_monitor))
 write_json(res_monitor, "8school_results_monitor.json")
 
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
-output <- matrix(ncol=15, nrow=ncol(res_nowarmup))
+print(dim(res_nowarmup))
+output <- matrix(ncol=15, nrow=dim(res_nowarmup)[3])
 j = 0
 
-for (i in 1:ncol(res_nowarmup)) {
-  ary = matrix(c(res_nowarmup[1:100,i], res_nowarmup[101:200,i], res_nowarmup[201:300,i], res_nowarmup[301:400,i]), 100, 4)
+for (i in 1:dim(res_nowarmup)[3]) {
+  ary = matrix(c(res_nowarmup[1:100,1,i], res_nowarmup[1:100,2,i], res_nowarmup[1:100,3,i], res_nowarmup[1:100,4,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
     rhat(ary),
