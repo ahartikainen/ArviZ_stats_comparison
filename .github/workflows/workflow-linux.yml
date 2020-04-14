@@ -51,7 +51,6 @@ jobs:
       - name: Install R dependencies (cran)
         run: |
           Rscript -e 'install.packages("rstan", type = "source")'
-          find /home/runner/work/_temp -iname "monitor.R" -type f | xargs cp -t .
         if: "!matrix.use-git"
 
       - name: Install R dependencies StanHeaders (git)
@@ -64,7 +63,6 @@ jobs:
       - name: Install R dependencies RStan (git)
         run: |
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
-          find /home/runner/work/_temp -iname "monitor.R" -type f | xargs cp -t .
         if: matrix.use-git
 
       - name: RStan and ArviZ versions
