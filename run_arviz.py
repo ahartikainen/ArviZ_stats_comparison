@@ -47,7 +47,7 @@ funcs = {
     "mcse_quantile30": lambda x: mcse(x, method="quantile", prob=0.3),
 }
 results = {}
-for key, coord_dict, vals in xarray_var_iter(idata.posterior, combined=True):
+for key, coord_dict, vals in az.plots.plot_utils.xarray_var_iter(idata.posterior, combined=True):
     if coord_dict:
         key = key + ".{}".format(list(coord_dict.values())[0] + 1)
     results[key] = {func_name: func(vals) for func_name, func in funcs.items()}
