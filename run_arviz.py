@@ -24,7 +24,7 @@ print(az.summary(idata))
 with open("8school_results_monitor.json") as f:
     res_monitor = json.load(f)
 
-res_monitor = pd.DataFrame.from_records(res_monitor, index="_row
+res_monitor = pd.DataFrame.from_records(res_monitor, index="_row")
 del res_monitor.index.name
 print(res_monitor)
 
