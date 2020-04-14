@@ -28,7 +28,7 @@ res_monitor = pd.DataFrame.from_records(res_monitor, index="_row")
 res_monitor.index.name = None
 print(res_monitor)
 
-reference = pd.read_csv("./reference_values.csv", index_col=0).reset_index()
+reference = pd.read_csv("./reference_values.csv", index_col=0).reset_index().astype(float)
 
 # test arviz functions
 funcs = {
@@ -55,7 +55,7 @@ for key, coord_dict, vals in az.plots.plot_utils.xarray_var_iter(
     if coord_dict:
         key = "{}".format(list(coord_dict.values())[0] + 1)
     results[key] = {func_name: func(vals) for func_name, func in funcs.items()}
-arviz_data = pd.DataFrame.from_dict(results).T.reset_index()
+arviz_data = pd.DataFrame.from_dict(results).T.reset_index().astype(float)
 
 # check column names
 print("Column names are the same:", set(arviz_data.columns) == set(reference.columns))
