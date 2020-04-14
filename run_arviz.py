@@ -51,9 +51,9 @@ funcs = {
 results = {}
 for key, coord_dict, vals in az.plots.plot_utils.xarray_var_iter(idata.posterior, combined=True):
     if coord_dict:
-        key = key + ".{}".format(list(coord_dict.values())[0] + 1)
+        key = key + "{}".format(list(coord_dict.values())[0] + 1)
     results[key] = {func_name: func(vals) for func_name, func in funcs.items()}
-arviz_data = pd.DataFrame.from_dict(results).T.sort_index(axis=1).sort_index(axis=0)
+arviz_data = pd.DataFrame.from_dict(results).T
 
 # check column names
 print("Column names are the same:", set(arviz_data.columns) == set(reference.columns))
