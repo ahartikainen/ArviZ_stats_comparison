@@ -1,6 +1,5 @@
 library("rstan")
 library("jsonlite")
-source("./monitor.R")
 
 options(mc.cores = parallel::detectCores())
 
