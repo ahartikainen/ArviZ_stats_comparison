@@ -30,21 +30,21 @@ reference = pd.read_csv("./reference_values.csv", index_col=0).sort_index(axis=1
 
 # test arviz functions
 funcs = {
-    "rhat_rank": lambda x: rhat(x, method="rank"),
-    "rhat_raw": lambda x: rhat(x, method="identity"),
-    "ess_bulk": lambda x: ess(x, method="bulk"),
-    "ess_tail": lambda x: ess(x, method="tail"),
-    "ess_mean": lambda x: ess(x, method="mean"),
-    "ess_sd": lambda x: ess(x, method="sd"),
-    "ess_raw": lambda x: ess(x, method="identity"),
-    "ess_quantile01": lambda x: ess(x, method="quantile", prob=0.01),
-    "ess_quantile10": lambda x: ess(x, method="quantile", prob=0.1),
-    "ess_quantile30": lambda x: ess(x, method="quantile", prob=0.3),
-    "mcse_mean": lambda x: mcse(x, method="mean"),
-    "mcse_sd": lambda x: mcse(x, method="sd"),
-    "mcse_quantile01": lambda x: mcse(x, method="quantile", prob=0.01),
-    "mcse_quantile10": lambda x: mcse(x, method="quantile", prob=0.1),
-    "mcse_quantile30": lambda x: mcse(x, method="quantile", prob=0.3),
+    "rhat_rank": lambda x: az.rhat(x, method="rank"),
+    "rhat_raw": lambda x: az.rhat(x, method="identity"),
+    "ess_bulk": lambda x: az.ess(x, method="bulk"),
+    "ess_tail": lambda x: az.ess(x, method="tail"),
+    "ess_mean": lambda x: az.ess(x, method="mean"),
+    "ess_sd": lambda x: az.ess(x, method="sd"),
+    "ess_raw": lambda x: az.ess(x, method="identity"),
+    "ess_quantile01": lambda x: az.ess(x, method="quantile", prob=0.01),
+    "ess_quantile10": lambda x: az.ess(x, method="quantile", prob=0.1),
+    "ess_quantile30": lambda x: az.ess(x, method="quantile", prob=0.3),
+    "mcse_mean": lambda x: az.mcse(x, method="mean"),
+    "mcse_sd": lambda x: az.mcse(x, method="sd"),
+    "mcse_quantile01": lambda x: az.mcse(x, method="quantile", prob=0.01),
+    "mcse_quantile10": lambda x: az.mcse(x, method="quantile", prob=0.1),
+    "mcse_quantile30": lambda x: az.mcse(x, method="quantile", prob=0.3),
 }
 results = {}
 for key, coord_dict, vals in az.plots.plot_utils.xarray_var_iter(idata.posterior, combined=True):
