@@ -24,6 +24,8 @@ print(az.summary(idata))
 with open("8school_results_monitor.json") as f:
     res_monitor = json.load(f)
 
+res_monitor = pd.DataFrame.from_records(res_monitor, index="_row
+del res_monitor.index.name
 print(res_monitor)
 
 reference = pd.read_csv("./reference_values.csv", index_col=0).sort_index(axis=1).sort_index(axis=0)
