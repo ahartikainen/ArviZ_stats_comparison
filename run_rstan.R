@@ -13,12 +13,16 @@ fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 2, 
 
 res = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
-print(c("Seed:", get_seed(fit)))
-print(c("Init:", get_inits(fit)))
-print(c("Adaptation:", get_adaptation_info(fit)))
+print("################### SEED ###################")
+print(get_seed(fit))
+print("################### INIT ###################")
+print(get_inits(fit)))
+print("################ ADAPTATION ################")
+print(get_adaptation_info(fit))
 
-print("Chain 1, Draw 1-3")
-print(res[1,1:3,])
+
+print("##### Chain 1, Draw 1-3 #####")
+print(res[1:3,1,])
 print(" ")
-print("Chain 2, Draw 1-3")
-print(res[2,1:3,])
+print("##### Chain 2, Draw 1-3 #####")
+print(res[1:3,2,])
