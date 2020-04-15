@@ -13,6 +13,7 @@ fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 2, 
 
 res = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
+print(" ")
 print("################### SEED ###################")
 print(get_seed(fit))
 
@@ -32,3 +33,7 @@ print(res[1:3,1,])
 print(" ")
 print("##### Chain 2, Draw 1-3 #####")
 print(res[1:3,2,])
+
+print(" ")
+print(" ### C++ code ###")
+print(stanc('Stan-models/8schools.stan')$cppcode)

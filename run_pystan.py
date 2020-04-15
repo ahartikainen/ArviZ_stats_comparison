@@ -12,12 +12,27 @@ fit = model.sampling(data=schools_dat, chains=2, iter=300, warmup=200, seed=123)
 
 res = fit.extract(permuted=False)
 
+print(" ")
 print("Seed:", fit.get_seed())
-print("Init:", fit.get_inits())
-print("Adaptation:", fit.get_adaptation_info())
 
+print(" ")
+print("Init:")
+print(fit.get_inits()[0])
+print(fit.get_inits()[1])
+
+print(" ")
+print("Adaptation:")
+print(fit.get_adaptation_info()[0])
+print(fit.get_adaptation_info()[1])
+
+print(" ")
 print("Chain 1, Draw 1-3")
 print(list(res[:3,0,:]))
+
 print(" ")
 print("Chain 2, Draw 1-3")
 print(list(res[:3,1,:]))
+
+print(" ")
+print(" ### C++ code ###")
+print(pystan.stanc('Stan-models/8schools.stan')["cppcode"])
