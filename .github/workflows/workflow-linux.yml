@@ -72,20 +72,26 @@ jobs:
           python -c 'import pystan;print("PyStan version: {}".format(pystan.__version__))'
           Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
 
-      - name: Inject couts
+      - name: Inject logger
         run: |
           python -c "import pystan;print(pystan)"
           Rscript -e "print(.libPaths())"
-          find /opt/hostedtoolcache/ -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained();\n        logger.info("rng");\n        logger.info(rng);\n        logger.info("unconstrained");\n        logger.info(unconstrained);\n        logger.info("init");\n        logger.info(init);\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained();\n        logger.info("unconstrained");\n        for (auto i: unconstrained) logger.info(i);\n        logger.info("init");\n        for (auto i: init) logger.info(i);\n/'
+
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts*.hpp" 2>/dev/null | xargs sed -i 's/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);\n        logger.info("rng");\n        boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); logger.info(unif(rng));\n/'
+
       - name: Comparison RStan 8 schools
         run: |
           Rscript comparison_stats_rstan.R
+
       - name: Comparison ArviZ 8 schools
         run: |
           python comparison_stats_arviz.py
+
       - name: RStan seed test
         run: |
           Rscript run_rstan.R
+
       - name: PyStan seed test
         run: |
           python run_pystan.py
