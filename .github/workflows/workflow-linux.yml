@@ -71,10 +71,15 @@ jobs:
           python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
           python -c 'import pystan;print("PyStan version: {}".format(pystan.__version__))'
           Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
-      - name: Run RStan 8 schools
+      - name: Comparison: RStan 8 schools
+        run: |
+          Rscript comparison_stats_rstan.R
+      - name: Comparison: ArviZ 8 schools
+        run: |
+          python comparison_stats_arviz.py
+      - name: RStan: seed test
         run: |
           Rscript run_rstan.R
-      - name: Run ArviZ 8 schools
+      - name: PyStan: seed test
         run: |
           python run_pystan.py
-          python run_arviz.py
