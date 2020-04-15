@@ -15,14 +15,20 @@ res = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
 print("################### SEED ###################")
 print(get_seed(fit))
+
+print(" ")
 print("################### INIT ###################")
-print(get_inits(fit)))
+print(get_inits(fit))
+
+print(" ")
 print("################ ADAPTATION ################")
 print(get_adaptation_info(fit))
 
 
+print(" ")
 print("##### Chain 1, Draw 1-3 #####")
 print(res[1:3,1,])
+
 print(" ")
 print("##### Chain 2, Draw 1-3 #####")
 print(res[1:3,2,])
