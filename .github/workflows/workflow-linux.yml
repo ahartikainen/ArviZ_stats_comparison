@@ -78,7 +78,8 @@ jobs:
           Rscript -e "print(.libPaths())"
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained();\n        logger.info("unconstrained");\n        for (auto i: unconstrained) logger.info(i);\n        logger.info("init");\n        for (auto i: init) logger.info(i);\n/'
 
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts*.hpp" 2>/dev/null | xargs sed -i 's/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);\n        logger.info("rng");\n        boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); logger.info(unif(rng));\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_dense_e_adapt.hpp" 2>/dev/null | xargs sed -i 's/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);\n        logger.info("rng");\n        boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); logger.info(unif(rng));\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_dense_e.hpp" 2>/dev/null | xargs sed -i 's/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);/boost::ecuyer1988 rng = util::create_rng(random_seed, chain);\n        logger.info("rng");\n        boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); logger.info(unif(rng));\n/'
 
       - name: Comparison RStan 8 schools
         run: |
