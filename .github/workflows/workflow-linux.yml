@@ -74,7 +74,7 @@ jobs:
 
       - name: Inject couts
         run: |
-          find / -name "initialize.*pp" | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained();\n      logger.info("rng");\n      logger.info(rng);\n      logger.info("unconstrained");\n      logger.info(unconstrained);\n      logger.info("init");\n      logger.info(init);/'
+          find / -name "initialize.*pp" | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained();\n        logger.info("rng");\n        logger.info(rng);\n        logger.info("unconstrained");\n        logger.info(unconstrained);\n        logger.info("init");\n        logger.info(init);\n/'
       - name: Comparison RStan 8 schools
         run: |
           Rscript comparison_stats_rstan.R
