@@ -15,4 +15,4 @@ print(fit)
 
 print(az.summary(fit))
 
-print(fit.extract(permuted=False)
+print(fit.extract(permuted=False))
