@@ -28,12 +28,13 @@ jobs:
       - name: Install python dependencies (pip)
         run: |
           pip install --upgrade pip
-          pip install arviz
+          pip install arviz pystan
         if: "!matrix.use-git"
 
       - name: Install python dependencies (git)
         run: |
           pip install --upgrade pip
+          pip install git+git://github.com/stan-dev/pystan.git
           pip install git+git://github.com/arviz-devs/arviz.git
         if: matrix.use-git
 
@@ -65,13 +66,15 @@ jobs:
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
         if: matrix.use-git
 
-      - name: RStan and ArviZ versions
+      - name: RStan, PyStan and ArviZ versions
         run: |
           python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
+          python -c 'import arviz;print("PyStan version: {}".format(pystan.__version__))'
           Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
       - name: Run RStan 8 schools
         run: |
           Rscript run_rstan.R
       - name: Run ArviZ 8 schools
         run: |
+          python run_pystan.py
           python run_arviz.py
