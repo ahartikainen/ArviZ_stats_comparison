@@ -8,7 +8,7 @@ schools_dat = dict(
 
 model = pystan.StanModel(file="Stan-models/8schools.stan", extra_compile_args=['-O3'])
 
-fit = model.sampling(data=schools_dat, chains=2, iter=300, warmup=200, seed=123, chain_id=[1,2])
+fit = model.sampling(data=schools_dat, chains=2, iter=300, warmup=200, seed=123, chain_id=[1,2], n_jobs=1)
 
 res = fit.extract(permuted=False)
 

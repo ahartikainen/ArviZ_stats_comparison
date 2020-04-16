@@ -1,7 +1,7 @@
 library("rstan")
 library("jsonlite")
 
-options(mc.cores = parallel::detectCores())
+options(mc.cores = 1)
 rstan_options(auto_write = TRUE)
 
 schools_dat <- list(
