@@ -9,7 +9,7 @@ schools_dat <- list(
     y = c(28,  8, -3,  7, -1,  1, 18, 12),
 		sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
 
-fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 2, iter = 300, warmup = 200, seed=123)
+fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 2, iter = 300, warmup = 200, seed=123, verbose = TRUE)
 
 res = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
