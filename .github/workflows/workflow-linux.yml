@@ -90,6 +90,16 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_diag_e_adapt.hpp" 2>/dev/null | xargs sed -i 's/sampler.set_max_depth(max_depth);/sampler.set_max_depth(max_depth); std::stringstream umsg; umsg << " stepsize " << stepsize; umsg << " stepsize_jitter " << stepsize_jitter; umsg << " max_depth " << max_depth; umsg << " delta " << delta; umsg << " gamma " << gamma; umsg << " kappa " << kappa; umsg << " t0 " << t0; logger.info(umsg);\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_diag_e.hpp" 2>/dev/null | xargs sed -i 's/sampler.set_max_depth(max_depth);/sampler.set_max_depth(max_depth); std::stringstream umsg; umsg << " stepsize " << stepsize; umsg << " stepsize_jitter " << stepsize_jitter; umsg << " max_depth " << max_depth; logger.info(umsg);\n/'
 
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <sstream>\n#include <string>\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <sstream>\n#include <string>\n/'
+
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; rmsg << unif(rng); logger.info(rmsg);\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; rmsg << unif(rng); logger.info(rmsg);\n/'
+
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg; rmsg << "rng_end "; rmsg << unif(rng); logger.info(rmsg);\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg; rmsg << "rng_end "; rmsg << unif(rng); logger.info(rmsg);\n/'
+
+
       - name: Comparison RStan 8 schools
         run: |
           Rscript comparison_stats_rstan.R
