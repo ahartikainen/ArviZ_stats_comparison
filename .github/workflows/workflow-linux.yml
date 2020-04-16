@@ -96,8 +96,8 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; rmsg << unif(rng); logger.info(rmsg);\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; rmsg << unif(rng); logger.info(rmsg);\n/'
 
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg; rmsg << "rng_end "; rmsg << unif(rng); logger.info(rmsg);\n/'
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg; rmsg << "rng_end "; rmsg << unif(rng); logger.info(rmsg);\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg2; rmsg2 << "rng_end "; rmsg2 << unif(rng); logger.info(rmsg2);\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t end = clock();/clock_t end = clock(); std::stringstream rmsg2; rmsg2 << "rng_end "; rmsg2 << unif(rng); logger.info(rmsg2);\n/'
 
 
       - name: Comparison RStan 8 schools
