@@ -4,6 +4,8 @@ library("jsonlite")
 options(mc.cores = 1)
 rstan_options(auto_write = TRUE)
 
+options(digits=16)
+
 schools_dat <- list(
     J = 8,
     y = c(28,  8, -3,  7, -1,  1, 18, 12),

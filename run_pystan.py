@@ -1,5 +1,8 @@
 import pystan
 
+import numpy as np
+np.set_printoptions(precision=16)
+
 schools_dat = dict(
     J = 8,
     y = [28,  8, -3,  7, -1,  1, 18, 12],
@@ -32,6 +35,16 @@ print(list(res[:3,0,:]))
 print(" ")
 print("Chain 2, Draw 1-3")
 print(list(res[:3,1,:]))
+
+
+print("\n AS NUMPY")
+print("Chain 1, Draw 1-3")
+print(res[:3,0,:])
+
+print(" ")
+print("Chain 2, Draw 1-3")
+print(res[:3,1,:])
+
 
 print(" ")
 print(" ### C++ code ###")
