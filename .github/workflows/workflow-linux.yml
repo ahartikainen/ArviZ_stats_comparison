@@ -104,7 +104,7 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/\n        this->z_.ps_point::operator=(z_init);/\n        this->z_.ps_point::operator=(z_init);\n  std::cout << mymsg2.str() << std::endl;\n/ w /dev/stdout'
 
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/#include <cmath>/#include <cmath>\n#include <string>\n#include <iostream>\n/ w /dev/stdout'
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/x_bar_ = (1.0 - x_eta) * x_bar_ + x_eta * x;/x_bar_ = (1.0 - x_eta) * x_bar_ + x_eta * x;\nstd::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << std::endl;\n/ w /dev/stdout'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/epsilon = std::exp(x);/epsilon = std::exp(x);\nstd::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << std::endl;\n/ w /dev/stdout'
 
       - name: Comparison RStan 8 schools
         run: |
