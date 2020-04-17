@@ -76,7 +76,7 @@ jobs:
         run: |
           python -c "import pystan;print(pystan)"
           Rscript -e "print(.libPaths())"
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/#include <string>/#include <string>\n#include <iostream>'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/#include <string>/#include <string>\n#include <iostream>/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained(); std::stringstream umsg; umsg << "unconstrained "; for (int i=0; i < unconstrained.size(); i++) {umsg << unconstrained[i] << " ";} std::cout << umsg.str();\n/'
 
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_diag_e_adapt.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <iostream>\n#include <string>\n/'
@@ -97,15 +97,13 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); rmsg << unif(rng); std::cout << rmsg.str();\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); rmsg << unif(rng); std::cout << rmsg.str();\n/'
 
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/#include <string>/#include <string>\n#include <iostream>'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/#include <string>/#include <string>\n#include <iostream>/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/int direction = delta_H > std::log(0.8) ? 1 : -1;/int direction = delta_H > std::log(0.8) ? 1 : -1;\nstd::stringstream mymsg; mymsg << "not while H0 " << H0 << " h " << h << " delta_H " << delta_H << " direction " << direction << "\\\n"; std::cout << mymsg.str(); std::stringstream mymsg2;\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/\n          double delta_H = H0 - h;/\n          double delta_H = H0 - h;\n  mymsg2 << "while H0 " << H0 << " h " << h << " delta_H " << delta_H << "\\\n";\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/\n        this->z_.ps_point::operator=(z_init);/\n        this->z_.ps_point::operator=(z_init);\n  std::cout << mymsg2.str();\n/'
 
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/#include <cmath>/#include <cmath>\ninclude <string>\n#include <iostream>'
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/std::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << "\\\n";\n/'
-
-
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/#include <cmath>/#include <cmath>\ninclude <string>\n#include <iostream>/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/std::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << "\\\n";\n/'
 
       - name: Comparison RStan 8 schools
         run: |
