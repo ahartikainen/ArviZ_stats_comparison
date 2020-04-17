@@ -76,6 +76,7 @@ jobs:
         run: |
           python -c "import pystan;print(pystan)"
           Rscript -e "print(.libPaths())"
+
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/#include <string>/#include <string>\n#include <iostream>/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/initialize.hpp" 2>/dev/null | xargs sed -i 's/unconstrained = random_context.get_unconstrained();/unconstrained = random_context.get_unconstrained(); std::stringstream umsg; umsg << "unconstrained "; for (int i=0; i < unconstrained.size(); i++) {umsg << unconstrained[i] << " ";} std::cout << umsg.str();\n/'
 
@@ -92,7 +93,7 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/sample/hmc_nuts_diag_e.hpp" 2>/dev/null | xargs sed -i 's/sampler.set_max_depth(max_depth);/sampler.set_max_depth(max_depth); std::stringstream umsg; umsg << " stepsize " << stepsize; umsg << " stepsize_jitter " << stepsize_jitter; umsg << " max_depth " << max_depth; std::cout << umsg.str();\n/'
 
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <iostream>\n#include <string>\n/'
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <sstream>\n#include <string>\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/#include <vector>/#include <vector>\n#include <iostream>\n#include <string>\n/'
 
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_adaptive_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); rmsg << unif(rng); std::cout << rmsg.str();\n/'
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*services/util/run_sampler.hpp" 2>/dev/null | xargs sed -i 's/clock_t start = clock();/clock_t start = clock(); std::stringstream rmsg; rmsg << "rng_start "; boost::random::uniform_real_distribution<double> unif(-2.0, 2.0); rmsg << unif(rng); std::cout << rmsg.str();\n/'
@@ -103,7 +104,7 @@ jobs:
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/hmc/base_hmc.hpp" 2>/dev/null | xargs sed -i 's/\n        this->z_.ps_point::operator=(z_init);/\n        this->z_.ps_point::operator=(z_init);\n  std::cout << mymsg2.str();\n/'
 
           find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/#include <cmath>/#include <cmath>\ninclude <string>\n#include <iostream>/'
-          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/std::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << "\\\n";\n/'
+          find /opt/hostedtoolcache/Python /home/runner/work/_temp/Library /opt/R/3.6.3/lib/R/library -type f -wholename "*stan/mcmc/stepsize_adaptation.hpp" 2>/dev/null | xargs sed -i 's/x_bar_ = (1.0 - x_eta) * x_bar_ + x_eta * x;/x_bar_ = (1.0 - x_eta) * x_bar_ + x_eta * x;\nstd::cout << "LEARN STEPSIZE adapt_stat " << adapt_stat << " eta " << eta << " s_bar_ " << s_bar_ << " x " << x << " exp(x) " << epsilon << " x_eta " << x_eta << "\\\n";\n/'
 
       - name: Comparison RStan 8 schools
         run: |
