@@ -39,7 +39,7 @@ jobs:
       - name: Install python dependencies (git)
         run: |
           pip install --upgrade pip
-          pip install git+git://github.com/stan-dev/pystan.git
+          pip install pystan
           pip install git+git://github.com/arviz-devs/arviz.git
         if: matrix.use-git
 
