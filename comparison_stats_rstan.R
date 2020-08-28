@@ -1,4 +1,5 @@
 library("rstan")
+library("posterior")
 library("jsonlite")
 
 options(mc.cores = parallel::detectCores())
@@ -19,9 +20,9 @@ write_json(res, "8school_results.json")
 
 print(monitor(fit))
 
-res_monitor = monitor(fit)
-print(dim(res_monitor))
-write_json(res_monitor, "8school_results_monitor.json")
+posterior_summary = posterior::summarise_draws(fit)
+print(dim(posterior_summary))
+write_json(posterior_summary, "8school_posterior_summary.json")
 
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
@@ -33,21 +34,23 @@ for (i in 1:dim(res_nowarmup)[3]) {
   ary = matrix(c(res_nowarmup[1:100,1,i], res_nowarmup[1:100,2,i], res_nowarmup[1:100,3,i], res_nowarmup[1:100,4,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
-    rstan:::Rhat(ary),
-    rstan:::rhat_rfun(ary),
-    rstan:::ess_bulk(ary),
-    rstan:::ess_tail(ary),
-    rstan:::ess_mean(ary),
-    rstan:::ess_sd(ary),
-    rstan:::ess_rfun(ary),
-    rstan:::ess_quantile(ary, 0.01),
-    rstan:::ess_quantile(ary, 0.1),
-    rstan:::ess_quantile(ary, 0.3),
-    rstan:::mcse_mean(ary),
-    rstan:::mcse_sd(ary),
-    rstan:::mcse_quantile(ary, prob=0.01),
-    rstan:::mcse_quantile(ary, prob=0.1),
-    rstan:::mcse_quantile(ary, prob=0.3))
+    posterior::rhat(ary),
+    posterior::rhat_basic(ary),
+    posterior::ess_bulk(ary),
+    posterior::ess_tail(ary),
+    posterior::ess_mean(ary),
+    posterior::ess_sd(ary),
+    posterior::ess_median(ary),
+    posterior::ess_basic(ary),
+    posterior::ess_quantile(ary, 0.01),
+    posterior::ess_quantile(ary, 0.1),
+    posterior::ess_quantile(ary, 0.3),
+    posterior::mcse_mean(ary),
+    posterior::mcse_sd(ary),
+    posterior::mcse_median(ary),
+    posterior::mcse_quantile(ary, prob=0.01),
+    posterior::mcse_quantile(ary, prob=0.1),
+    posterior::mcse_quantile(ary, prob=0.3))
 }
 
 df = data.frame(output)
@@ -57,12 +60,14 @@ colnames(df) <- c("rhat_rank",
                   "ess_tail",
                   "ess_mean",
                   "ess_sd",
+		  "ess_median",
                   "ess_raw",
                   "ess_quantile01",
                   "ess_quantile10",
                   "ess_quantile30",
                   "mcse_mean",
                   "mcse_sd",
+		  "mcse_median",
                   "mcse_quantile01",
                   "mcse_quantile10",
                   "mcse_quantile30")
