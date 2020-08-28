@@ -18,7 +18,7 @@ res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
 print(dim(res))
 write_json(res, "8school_results.json")
 
-print(monitor(fit))
+print(posterior::summarise_draws(fit))
 
 posterior_summary = posterior::summarise_draws(fit)
 print(dim(posterior_summary))
@@ -27,7 +27,7 @@ write_json(posterior_summary, "8school_posterior_summary.json")
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 print(dim(res_nowarmup))
-output <- matrix(ncol=15, nrow=dim(res_nowarmup)[3])
+output <- matrix(ncol=17, nrow=dim(res_nowarmup)[3])
 j = 0
 
 for (i in 1:dim(res_nowarmup)[3]) {
