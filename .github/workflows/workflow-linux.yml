@@ -65,7 +65,7 @@ jobs:
         run: |
           Rscript -e 'install.packages("Rcpp")'
           Rscript -e 'install.packages("RcppEigen")'
-          Rscript -e 'install.packages("http://cran.r-project.org/src/contrib/Archive/StanHeaders/StanHeaders_2.21.0-1.tar.gz", repos=NULL, type="source")'
+          Rscript -e 'install.packages("http://cran.r-project.org/src/contrib/Archive/StanHeaders/StanHeaders_2.21.0-5.tar.gz", repos=NULL, type="source")'
         if: matrix.use-git
 
       - name: Install R dependencies RStan (git)
