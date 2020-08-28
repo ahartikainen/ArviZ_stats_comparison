@@ -3,9 +3,9 @@ name: Linux
 on:
     push:
       branches:
-        - "*"
+        - '*'
     schedule:
-      - cron:  "0 0 * * 0"
+      - cron:  '0 0 * * 0'
 
 jobs:
   tests:
