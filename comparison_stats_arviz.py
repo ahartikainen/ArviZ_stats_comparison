@@ -22,11 +22,11 @@ pd.set_option("display.max_rows", None)
 print(az.summary(idata))
 
 with open("8school_posterior_summary.json") as f:
-    res_monitor = json.load(f)
+    res_posterior_summary = json.load(f)
 
-res_monitor = pd.DataFrame.from_records(res_monitor, index="_row")
-res_monitor.index.name = None
-print(res_monitor)
+res_posterior_summary = pd.DataFrame.from_records(res_posterior_summary, index="variable")
+res_posterior_summary.index.name = None
+print(res_posterior_summary)
 
 reference = pd.read_csv("./reference_values.csv", index_col=0).reset_index().astype(float)
 
