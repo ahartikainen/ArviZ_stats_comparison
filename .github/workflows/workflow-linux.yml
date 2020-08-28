@@ -32,14 +32,14 @@ jobs:
 
       - name: Install python dependencies (pip)
         run: |
-          pip install --upgrade pip
+          pip install --upgrade pip wheel
           pip install arviz pystan
         if: "!matrix.use-git"
 
       - name: Install python dependencies (git)
         run: |
-          pip install --upgrade pip
-          pip install pystan
+          pip install --upgrade pip wheel
+          pip install git+git://github.com/stan-dev/pystan.git 
           pip install git+git://github.com/arviz-devs/arviz.git
         if: matrix.use-git
 
@@ -51,12 +51,14 @@ jobs:
           printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> "${HOME}/.R/Makevars"
           printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
           cat --show-all "${HOME}/.R/Makevars"
+          Rscript -e 'install.packages("posterior")'
           Rscript -e 'install.packages("remotes")'
           Rscript -e 'install.packages("jsonlite")'
 
       - name: Install R dependencies (cran)
         run: |
           Rscript -e 'install.packages("rstan", type = "source")'
+          Rscript -e 'install.packages("posterior", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
         if: "!matrix.use-git"
 
       - name: Install R dependencies StanHeaders (git)
@@ -69,6 +71,7 @@ jobs:
       - name: Install R dependencies RStan (git)
         run: |
           Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
+          Rscript -e 'remotes::install_github("stan-dev/posterior")'
         if: matrix.use-git
 
       - name: RStan, PyStan and ArviZ versions
@@ -76,6 +79,7 @@ jobs:
           python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
           python -c 'import pystan;print("PyStan version: {}".format(pystan.__version__))'
           Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
+          Rscript -e 'library(rstan);print(paste("posterior version:", packageVersion("posterior"), sep = " "))'
 
       - name: Inject logger
         run: |
@@ -128,3 +132,8 @@ jobs:
       - name: PyStan seed test
         run: |
           python run_pystan.py
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload results
+          path: ./*.csv
