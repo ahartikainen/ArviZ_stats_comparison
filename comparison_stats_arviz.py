@@ -21,12 +21,12 @@ pd.set_option("display.max_rows", None)
 
 print(az.summary(idata))
 
-with open("8school_results_monitor.json") as f:
-    res_monitor = json.load(f)
+with open("8school_posterior_summary.json") as f:
+    res_posterior_summary = json.load(f)
 
-res_monitor = pd.DataFrame.from_records(res_monitor, index="_row")
-res_monitor.index.name = None
-print(res_monitor)
+res_posterior_summary = pd.DataFrame.from_records(res_posterior_summary, index="variable")
+res_posterior_summary.index.name = None
+print(res_posterior_summary)
 
 reference = pd.read_csv("./reference_values.csv", index_col=0).reset_index().astype(float)
 
@@ -38,12 +38,14 @@ funcs = {
     "ess_tail": lambda x: az.ess(x, method="tail"),
     "ess_mean": lambda x: az.ess(x, method="mean"),
     "ess_sd": lambda x: az.ess(x, method="sd"),
+    "ess_median": lambda x: az.ess(x, method="median"),
     "ess_raw": lambda x: az.ess(x, method="identity"),
     "ess_quantile01": lambda x: az.ess(x, method="quantile", prob=0.01),
     "ess_quantile10": lambda x: az.ess(x, method="quantile", prob=0.1),
     "ess_quantile30": lambda x: az.ess(x, method="quantile", prob=0.3),
     "mcse_mean": lambda x: az.mcse(x, method="mean"),
     "mcse_sd": lambda x: az.mcse(x, method="sd"),
+    "mcse_median": lambda x: az.mcse(x, method="quantile", prob=0.5),
     "mcse_quantile01": lambda x: az.mcse(x, method="quantile", prob=0.01),
     "mcse_quantile10": lambda x: az.mcse(x, method="quantile", prob=0.1),
     "mcse_quantile30": lambda x: az.mcse(x, method="quantile", prob=0.3),
@@ -73,6 +75,10 @@ print(reference - arviz_data)
 print((reference - arviz_data).abs().max(0))
 print((reference - arviz_data).abs().max(1))
 print((reference - arviz_data).abs().max().max())
+
+arviz_data.to_csv("./reference_values_arviz.csv")
+(reference-arviz_data).to_csv("./reference_values_minus_arviz_values.csv")
+
 # then test manually (more strict)
 # assert (abs(reference["rhat_rank"] - arviz_data["rhat_rank"]) < 6e-5).all(None)
 # assert abs(np.median(reference["rhat_rank"] - arviz_data["rhat_rank"]) < 1e-14).all(None)
