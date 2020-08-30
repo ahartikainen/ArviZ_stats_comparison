@@ -41,7 +41,11 @@ jobs:
           pip install --upgrade pip wheel
           pip install cython numpy
           pip install git+git://github.com/stan-dev/pystan.git
-          pip install git+git://github.com/arviz-devs/arviz.git
+          git clone https://github.com/arviz-devs/arviz
+          cd arviz
+          git checkout update_diagnostics
+          pip install .
+          pip install holoviews bokeh
         if: matrix.use-git
 
       - name: Set up toolchain for R
