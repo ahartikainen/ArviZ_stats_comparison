@@ -2,4 +2,4 @@
 
 # ArviZ_stats_comparison
 
-Compare stats algorithms with RStan monitor
+Compare ArviZ convergence algorithms with posterior package.
