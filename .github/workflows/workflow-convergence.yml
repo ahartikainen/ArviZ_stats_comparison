@@ -63,7 +63,7 @@ jobs:
 
       - name: Install R dependencies (cran)
         run: |
-          Rscript -e 'install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = FALSE)'
+          Rscript -e 'install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)'
           Rscript -e 'install.packages("posterior", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
         if: "!matrix.use-git"
 
