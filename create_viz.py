@@ -23,7 +23,6 @@ df_py_unstack = (
     .rename(columns={"level_0": "diagnostic", "level_1": "value_index", 0: "py_values"})
 )
 
-comparison.groupby("diagnostic")["diff"].mean()
 comparison = df_r_unstack.merge(df_py_unstack)
 comparison["diff"] = comparison["r_values"] - comparison["py_values"]
 comparison["quality"] = np.ceil(np.log10(abs(comparison["diff"])))
