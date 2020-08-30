@@ -32,7 +32,7 @@ jobs:
 
       - name: Install python dependencies (pip)
         env:
-            USEGIT = $(matrix.use-git}
+            USEGIT : $(matrix.use-git}
         run: |
           python -c "import os;print(os.environ.get('USEGIT'), type(os.environ.get('USEGIT')))"
           pip install --upgrade pip wheel
@@ -132,7 +132,7 @@ jobs:
 
       - name: Vizualization
         env:
-            USEGIT = $(matrix.use-git}
+            USEGIT : $(matrix.use-git}
         run: |
           python create_viz.py
 
