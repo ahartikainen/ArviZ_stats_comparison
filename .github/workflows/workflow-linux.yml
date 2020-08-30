@@ -31,10 +31,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
 
       - name: Install python dependencies (pip)
-        env:
-            USEGIT : ${{ matrix.use-git }}
         run: |
-          python -c "import os;print(os.environ.get('USEGIT'), type(os.environ.get('USEGIT')))"
           pip install --upgrade pip wheel
           pip install arviz pystan
           pip install pandas numpy holoviews bokeh
