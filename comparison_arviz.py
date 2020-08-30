@@ -71,13 +71,16 @@ print("Column names are the same:", set(arviz_data.columns) == set(reference.col
 # this is due to numerical accuracy in calculation leading to rankdata
 # function, which scales minimal difference to larger scale
 # test first with numpy
-print("REFERENCE")
+print("POSTERIOR")
 print(reference)
-print("ARVIZ")
+print("\n\nARVIZ")
 print(arviz_data)
+print("\n\nPOSTERIOR - ARVIZ")
 print(reference - arviz_data)
+print("\n\nMAX ABS DIFF")
 print((reference - arviz_data).abs().max(0))
 print((reference - arviz_data).abs().max(1))
+print("\n\nMAX ABS")
 print((reference - arviz_data).abs().max().max())
 
 arviz_data.to_csv("./reference_arviz.csv")

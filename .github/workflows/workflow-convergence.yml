@@ -1,0 +1,120 @@
+name: Convergence
+
+on:
+    push:
+      branches:
+        - '**'
+    schedule:
+      - cron:  '0 0 * * 0'
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+        r-version: [4.0.2]
+        use-git : [true, false]
+      fail-fast: false
+    steps:
+      - name: Checkout github
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r-version }}
+
+      - name: Install python dependencies (pip)
+        run: |
+          pip install --upgrade pip wheel
+          pip install arviz pystan
+          pip install holoviews bokeh
+        if: "!matrix.use-git"
+
+      - name: Install python dependencies (git)
+        run: |
+          pip install --upgrade pip wheel
+          pip install numpy cython
+          pip install git+git://github.com/stan-dev/pystan.git
+          pip install git+git://github.com/arviz-devs/arviz.git
+          pip install holoviews bokeh
+        if: matrix.use-git
+
+      - name: Set up toolchain for R
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev libv8-dev
+          mkdir -p "${HOME}/.R"
+          printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> "${HOME}/.R/Makevars"
+          printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
+          cat --show-all "${HOME}/.R/Makevars"
+          Rscript -e 'install.packages("posterior")'
+          Rscript -e 'install.packages("remotes")'
+          Rscript -e 'install.packages("jsonlite")'
+
+      - name: Install R dependencies (cran)
+        run: |
+          Rscript -e 'install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)'
+          Rscript -e 'install.packages("posterior", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))'
+        if: "!matrix.use-git"
+
+      - name: Install R dependencies StanHeaders (git)
+        run: |
+          Rscript -e 'install.packages("Rcpp")'
+          Rscript -e 'install.packages("RcppEigen")'
+          Rscript -e 'install.packages("http://cran.r-project.org/src/contrib/Archive/StanHeaders/StanHeaders_2.21.0-5.tar.gz", repos=NULL, type="source")'
+        if: matrix.use-git
+
+      - name: Install R dependencies RStan (git)
+        run: |
+          Rscript -e 'remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "--no-build-vignettes")'
+          Rscript -e 'remotes::install_github("stan-dev/posterior")'
+        if: matrix.use-git
+
+      - name: RStan, PyStan and ArviZ versions
+        run: |
+          python -c 'import arviz;print("ArviZ version: {}".format(arviz.__version__))'
+          python -c 'import pystan;print("PyStan version: {}".format(pystan.__version__))'
+          Rscript -e 'library(rstan);print(paste("RStan version:", packageVersion("rstan"), sep = " "))'
+          Rscript -e 'library(rstan);print(paste("posterior version:", packageVersion("posterior"), sep = " "))'
+
+      - name: Comparison RStan 8 schools
+        run: |
+          Rscript comparison_posterior.R
+
+      - name: Comparison ArviZ 8 schools
+        run: |
+          python comparison_arviz.py
+
+      - name: Visualization
+        env:
+            USEGIT : ${{ matrix.use-git }}
+        run: |
+          python create_viz.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload results
+          path: ./*.csv
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload viz
+          path: ./*.html
+
+      - name: Update docs
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout gh_pages
+          mv -f *.html docs/
+          git add docs
+          git commit -m "update html"
+          git push
+        if: github.ref == 'refs/heads/master'

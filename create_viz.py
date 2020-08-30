@@ -9,7 +9,7 @@ from bokeh.models import HoverTool
 if os.environ.get("USEGIT") == "true":
     env_name = "git"
 else:
-    env_name = "pip-cran"
+    env_name = "pypi-cran"
 
 df_r = pd.read_csv("reference_posterior.csv", index_col=0).reset_index(drop=True)
 df_py = (
@@ -70,7 +70,11 @@ hover_tool_ess = HoverTool(
 )
 
 hover_tool = HoverTool(
-    tooltips=[("function", "@diagnostic"), ("max", "@diff_max"), ("min", "@diff_min"),]
+    tooltips=[
+        ("function", "@diagnostic"),
+        ("max", "@diff_max"),
+        ("min", "@diff_min"),
+    ]
 )
 
 TOOLS_rhat = ["save", "pan", "reset", hover_tool_rhat, "ybox_zoom", "ywheel_zoom"]
@@ -133,4 +137,4 @@ boxwhisker3.opts(
 
 layout = hv.Layout((boxwhisker, boxwhisker2, boxwhisker3)).cols(1)
 renderer = hv.renderer("bokeh")
-renderer.save(layout, f"saved_boxplots_{env_name}")
+renderer.save(layout, f"posterior_arviz_convergence_{env_name}")
