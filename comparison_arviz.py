@@ -80,7 +80,7 @@ print((reference - arviz_data).abs().max(0))
 print((reference - arviz_data).abs().max(1))
 print((reference - arviz_data).abs().max().max())
 
-arviz_data.to_csv("./reference_values_arviz.csv")
+arviz_data.to_csv("./reference_arviz.csv")
 
 # then test manually (more strict)
 # assert (abs(reference["rhat_rank"] - arviz_data["rhat_rank"]) < 6e-5).all(None)
