@@ -24,11 +24,15 @@ print(az.summary(idata))
 with open("8school_posterior_summary.json") as f:
     res_posterior_summary = json.load(f)
 
-res_posterior_summary = pd.DataFrame.from_records(res_posterior_summary, index="variable")
+res_posterior_summary = pd.DataFrame.from_records(
+    res_posterior_summary, index="variable"
+)
 res_posterior_summary.index.name = None
 print(res_posterior_summary)
 
-reference = pd.read_csv("./reference_values.csv", index_col=0).reset_index().astype(float)
+reference = (
+    pd.read_csv("./reference_posterior.csv", index_col=0).reset_index().astype(float)
+)
 
 # test arviz functions
 funcs = {
@@ -76,8 +80,7 @@ print((reference - arviz_data).abs().max(0))
 print((reference - arviz_data).abs().max(1))
 print((reference - arviz_data).abs().max().max())
 
-arviz_data.to_csv("./reference_values_arviz.csv")
-(reference-arviz_data).to_csv("./reference_values_minus_arviz_values.csv")
+arviz_data.to_csv("./reference_arviz.csv")
 
 # then test manually (more strict)
 # assert (abs(reference["rhat_rank"] - arviz_data["rhat_rank"]) < 6e-5).all(None)

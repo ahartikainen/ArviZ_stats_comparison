@@ -35,13 +35,13 @@ for (i in 1:dim(res_nowarmup)[3]) {
   j <- j + 1
   output[j,] <- c(
     posterior::rhat(ary),
-    posterior::rhat_basic(ary),
+    posterior::rhat_basic(ary, FALSE),
     posterior::ess_bulk(ary),
     posterior::ess_tail(ary),
     posterior::ess_mean(ary),
     posterior::ess_sd(ary),
     posterior::ess_median(ary),
-    posterior::ess_basic(ary),
+    posterior::ess_basic(ary, FALSE),
     posterior::ess_quantile(ary, 0.01),
     posterior::ess_quantile(ary, 0.1),
     posterior::ess_quantile(ary, 0.3),
@@ -71,5 +71,5 @@ colnames(df) <- c("rhat_rank",
                   "mcse_quantile01",
                   "mcse_quantile10",
                   "mcse_quantile30")
-write.csv(df, "reference_values.csv")
+write.csv(df, "reference_posterior.csv")
 print(df)
