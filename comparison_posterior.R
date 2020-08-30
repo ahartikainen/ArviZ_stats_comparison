@@ -71,5 +71,5 @@ colnames(df) <- c("rhat_rank",
                   "mcse_quantile01",
                   "mcse_quantile10",
                   "mcse_quantile30")
-write.csv(df, "reference_values.csv")
+write.csv(df, "reference_posterior.csv")
 print(df)

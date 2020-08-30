@@ -34,13 +34,15 @@ jobs:
         run: |
           pip install --upgrade pip wheel
           pip install arviz pystan
+          pip install pandas numpy holoviews bokeh
         if: "!matrix.use-git"
 
       - name: Install python dependencies (git)
         run: |
           pip install --upgrade pip wheel
-          pip install git+git://github.com/stan-dev/pystan.git 
+          pip install git+git://github.com/stan-dev/pystan.git
           pip install git+git://github.com/arviz-devs/arviz.git
+          pip install pandas numpy holoviews bokeh
         if: matrix.use-git
 
       - name: Set up toolchain for R
@@ -119,11 +121,25 @@ jobs:
 
       - name: Comparison RStan 8 schools
         run: |
-          Rscript comparison_stats_rstan.R
+          Rscript comparison_posterior.R
 
       - name: Comparison ArviZ 8 schools
         run: |
-          python comparison_stats_arviz.py
+          python comparison_arviz.py
+
+      - name: Vizualization
+        run: |
+          python create_viz.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload results
+          path: ./*.csv
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload viz
+          path: ./*.html
 
       - name: RStan seed test
         run: |
@@ -132,8 +148,3 @@ jobs:
       - name: PyStan seed test
         run: |
           python run_pystan.py
-          
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Upload results
-          path: ./*.csv
