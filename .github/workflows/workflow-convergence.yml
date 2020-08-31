@@ -99,12 +99,17 @@ jobs:
         env:
             USEGIT : ${{ matrix.use-git }}
         run: |
-          python create_viz.py
+          python comparison_viz.py
 
       - uses: actions/upload-artifact@v2
         with:
           name: Upload results
           path: ./*.csv
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload sample
+          path: ./*.json
 
       - uses: actions/upload-artifact@v2
         with:
