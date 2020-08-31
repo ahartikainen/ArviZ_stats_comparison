@@ -8,12 +8,12 @@ Links to individual pages
 ## Latest Github versions
 <iframe
   src="https://ahartikainen.github.io/ArviZ_stats_comparison/posterior_arviz_convergence_git.html"
-  style="width:100%; height:1200px;"
+  style="width:100%; height:1000px; frameBorder="0";"
 ></iframe>
 
 
 ## PyPI - CRAN versions
 <iframe
   src="https://ahartikainen.github.io/ArviZ_stats_comparison/posterior_arviz_convergence_pypi-cran.html"
-  style="width:100%; height:1200px;"
+  style="width:100%; height:1000px; frameBorder="0";"
 ></iframe>
