@@ -86,7 +86,7 @@ boxwhisker = hv.BoxWhisker(
     comparison[comparison.group == "rhat"].rename(
         columns={"diff_min": "diff_min_rhat", "diff": "diff_rhat"}
     ),
-    ["diagnostic", "diff_max", "diff_min_rhat"],
+    ["diagnostic", "diff_min_rhat", "diff_max"],
     ["diff_rhat"],
     label=title,
 )
@@ -104,7 +104,7 @@ boxwhisker2 = hv.BoxWhisker(
     comparison[comparison.group == "ess"].rename(
         columns={"diff_min": "diff_min_ess", "diff": "diff_ess"}
     ),
-    ["diagnostic", "diff_max", "diff_min_ess"],
+    ["diagnostic", "diff_min_ess", "diff_max"],
     "diff_ess",
     label=title,
 )
@@ -121,7 +121,7 @@ boxwhisker2.opts(
 title = "mcse"
 boxwhisker3 = hv.BoxWhisker(
     comparison[comparison.group == "mcse"].rename(columns={"diff": "diff_mcse"}),
-    ["diagnostic", "diff_max", "diff_min"],
+    ["diagnostic", "diff_min", "diff_max"],
     "diff_mcse",
     label=title,
 )
