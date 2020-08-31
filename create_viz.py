@@ -79,7 +79,7 @@ hover_tool = HoverTool(
 
 TOOLS_rhat = ["save", "pan", "reset", hover_tool_rhat, "ybox_zoom", "ywheel_zoom"]
 TOOLS_ess = ["save", "pan", "reset", hover_tool_ess, "ybox_zoom", "ywheel_zoom"]
-TOOLS = ["save", "pan", "reset", hover_tool, "ybox_zoom", "ywheel_zoom"]
+TOOLS_mcse = ["save", "pan", "reset", hover_tool, "ybox_zoom", "ywheel_zoom"]
 
 title = "rhat accuracy"
 boxwhisker = hv.BoxWhisker(
@@ -112,7 +112,7 @@ boxwhisker2.opts(
     show_legend=False,
     width=800,
     show_grid=True,
-    tools=TOOLS,
+    tools=TOOLS_ess,
     default_tools=[],
     box_fill_color="orange",
     xlabel="",
@@ -129,7 +129,7 @@ boxwhisker3.opts(
     show_legend=False,
     width=600,
     show_grid=True,
-    tools=TOOLS,
+    tools=TOOLS_mcse,
     default_tools=[],
     box_fill_color="yellow",
     xlabel="",
