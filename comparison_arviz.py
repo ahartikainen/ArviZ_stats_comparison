@@ -1,7 +1,10 @@
-import arviz as az
 import json
+import os
+
 import numpy as np
 import pandas as pd
+
+import arviz as az
 
 if os.environ.get("USEGIT") == "true":
     env_name = "git"
@@ -36,7 +39,9 @@ res_posterior_summary.index.name = None
 print(res_posterior_summary)
 
 reference = (
-    pd.read_csv(f"./reference_posterior_{env_name}.csv", index_col=0).reset_index().astype(float)
+    pd.read_csv(f"./reference_posterior_{env_name}.csv", index_col=0)
+    .reset_index()
+    .astype(float)
 )
 
 # test arviz functions

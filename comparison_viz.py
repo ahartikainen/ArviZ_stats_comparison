@@ -1,10 +1,11 @@
 import os
-import pandas as pd
-import numpy as np
+
 import holoviews as hv
+import numpy as np
+import pandas as pd
+from bokeh.models import HoverTool
 
 hv.extension("bokeh")
-from bokeh.models import HoverTool
 
 if os.environ.get("USEGIT") == "true":
     env_name = "git"
