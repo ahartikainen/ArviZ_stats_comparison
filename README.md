@@ -1,4 +1,5 @@
-![Linux](https://github.com/ahartikainen/ArviZ_stats_comparison/workflows/Linux/badge.svg?branch=master)
+![Convergence](https://github.com/ahartikainen/ArviZ_stats_comparison/workflows/Convergence/badge.svg)
+![Cpp-Equality](https://github.com/ahartikainen/ArviZ_stats_comparison/workflows/Cpp-Equality/badge.svg)
 
 # ArviZ_stats_comparison
 
