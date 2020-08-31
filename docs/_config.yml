@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: Posterior - ArviZ convergence diagnostics
+description: Comparison of convergence algorithms
+show_downloads: false
