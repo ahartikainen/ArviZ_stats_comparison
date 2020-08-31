@@ -3,7 +3,12 @@ import json
 import numpy as np
 import pandas as pd
 
-with open("8school_results.json") as f:
+if os.environ.get("USEGIT") == "true":
+    env_name = "git"
+else:
+    env_name = "pypi-cran"
+
+with open(f"8school_results_{env_name}.json") as f:
     res = json.load(f)
 
 res = np.array(res)
@@ -31,7 +36,7 @@ res_posterior_summary.index.name = None
 print(res_posterior_summary)
 
 reference = (
-    pd.read_csv("./reference_posterior.csv", index_col=0).reset_index().astype(float)
+    pd.read_csv(f"./reference_posterior_{env_name}.csv", index_col=0).reset_index().astype(float)
 )
 
 # test arviz functions
@@ -83,7 +88,7 @@ print((reference - arviz_data).abs().max(1))
 print("\n\nMAX ABS")
 print((reference - arviz_data).abs().max().max())
 
-arviz_data.to_csv("./reference_arviz.csv")
+arviz_data.to_csv(f"./reference_arviz_{env_name}.csv")
 
 # then test manually (more strict)
 # assert (abs(reference["rhat_rank"] - arviz_data["rhat_rank"]) < 6e-5).all(None)

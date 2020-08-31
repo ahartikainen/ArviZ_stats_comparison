@@ -22,7 +22,14 @@ print(posterior::summarise_draws(fit))
 
 posterior_summary = posterior::summarise_draws(fit)
 print(dim(posterior_summary))
-write_json(posterior_summary, "8school_posterior_summary.json")
+
+if (Sys.getenv(x = "USEGIT") == "true") {
+  env_name <- "git"
+} else {
+    env_name <- "pypi-cran"
+}
+
+write_json(res, paste(paste("8school_results", env_name, sep="_", collapse=""), ".json", sep=""))
 
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
@@ -71,5 +78,6 @@ colnames(df) <- c("rhat_rank",
                   "mcse_quantile01",
                   "mcse_quantile10",
                   "mcse_quantile30")
-write.csv(df, "reference_posterior.csv")
+write.csv(df, paste(paste("reference_posterior", env_name, sep="_", collapse=""), ".csv", sep=""))
+
 print(df)
