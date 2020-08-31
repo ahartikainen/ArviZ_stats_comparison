@@ -1,6 +1,4 @@
-# Posterior - ArviZ convergence diagnostics
-
-Links to invidual pages
+Links to individual pages
 
 [Convergence difference (git)](https://ahartikainen.github.io/ArviZ_stats_comparison/posterior_arviz_convergence_git.html)  
 
