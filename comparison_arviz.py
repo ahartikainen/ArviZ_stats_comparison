@@ -29,7 +29,7 @@ pd.set_option("display.max_rows", None)
 
 print(az.summary(idata))
 
-with open("8school_posterior_summary.json") as f:
+with open(f"posterior_summary_{env_name}.json") as f:
     res_posterior_summary = json.load(f)
 
 res_posterior_summary = pd.DataFrame.from_records(

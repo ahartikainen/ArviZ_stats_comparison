@@ -12,7 +12,9 @@ if os.environ.get("USEGIT") == "true":
 else:
     env_name = "pypi-cran"
 
-df_r = pd.read_csv(f"reference_posterior_{env_name}.csv", index_col=0).reset_index(drop=True)
+df_r = pd.read_csv(f"reference_posterior_{env_name}.csv", index_col=0).reset_index(
+    drop=True
+)
 df_py = (
     pd.read_csv(f"reference_arviz_{env_name}.csv", index_col=0)
     .reset_index(drop=True)

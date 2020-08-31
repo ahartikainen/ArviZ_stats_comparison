@@ -16,12 +16,7 @@ print(fit)
 
 res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
 print(dim(res))
-write_json(res, "8school_results.json")
 
-print(posterior::summarise_draws(fit))
-
-posterior_summary = posterior::summarise_draws(fit)
-print(dim(posterior_summary))
 
 if (Sys.getenv(x = "USEGIT") == "true") {
   env_name <- "git"
@@ -29,8 +24,14 @@ if (Sys.getenv(x = "USEGIT") == "true") {
     env_name <- "pypi-cran"
 }
 
-write_json(res, paste(paste("8school_results", env_name, sep="_", collapse=""), ".json", sep=""))
+write_json(res, paste(paste("8school_results", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
 
+print(posterior::summarise_draws(fit))
+
+posterior_summary = posterior::summarise_draws(fit)
+print(dim(posterior_summary))
+
+write_json(res, paste(paste("posterior_summary", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
 
 res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
 print(dim(res_nowarmup))
