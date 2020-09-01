@@ -1,19 +1,22 @@
 import os
-import pandas as pd
-import numpy as np
+
 import holoviews as hv
+import numpy as np
+import pandas as pd
+from bokeh.models import HoverTool
 
 hv.extension("bokeh")
-from bokeh.models import HoverTool
 
 if os.environ.get("USEGIT") == "true":
     env_name = "git"
 else:
     env_name = "pypi-cran"
 
-df_r = pd.read_csv("reference_posterior.csv", index_col=0).reset_index(drop=True)
+df_r = pd.read_csv(f"reference_posterior_{env_name}.csv", index_col=0).reset_index(
+    drop=True
+)
 df_py = (
-    pd.read_csv("reference_arviz.csv", index_col=0)
+    pd.read_csv(f"reference_arviz_{env_name}.csv", index_col=0)
     .reset_index(drop=True)
     .drop(columns="index")
 )
@@ -42,7 +45,7 @@ comparison["group"] = comparison["diagnostic"].apply(
     if "ess" in x
     else "mcse"
     if "mcse" in x
-    else "WHAT"
+    else "WHAT {}".format(str(x))
 )
 for key, func in [
     ("diff_max", np.max),

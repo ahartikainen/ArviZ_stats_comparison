@@ -3,35 +3,53 @@ library("posterior")
 library("jsonlite")
 
 options(mc.cores = parallel::detectCores())
+options(digits=16)
 
 rstan_options(auto_write = TRUE)
+
+if (Sys.getenv(x = "USEGIT") == "true") {
+  env_name <- "git"
+} else {
+    env_name <- "pypi-cran"
+}
 
 schools_dat <- list(J = 8,
                     y = c(28,  8, -3,  7, -1,  1, 18, 12),
 		    sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
-
 fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 4, iter = 300, warmup = 200, seed=123)
-
 print(fit)
 
-res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
-print(dim(res))
-write_json(res, "8school_results.json")
 
-print(posterior::summarise_draws(fit))
+res = extract(fit, permuted=FALSE, inc_warmup=TRUE)
+print("Dim res")
+print(dim(res))
+write_json(res, paste(paste("8school_results", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
+
+res_nowarmup <- extract(fit, permuted=FALSE, inc_warmup=FALSE)
+print("Dim res no warmup")
+print(dim(res_nowarmup))
+write_json(res_nowarmup, paste(paste("8school_results_nowarmup", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
+
+res_nowarmup_reread <- read_json(paste(paste("8school_results_nowarmup", env_name, sep="_", collapse=""), ".json", sep=""))
+res_nowarmup_reread <- aperm(array(unlist(res_nowarmup_reread), rev(dim(res_nowarmup))))
+
+print("Dim res no warmup reread")
+print(dim(res_nowarmup_reread))
+
+print("difference between original and loaded < 1e-10")
+print(all(abs(res_nowarmup - res_nowarmup_reread) < 1e-10))
+print(res_nowarmup - res_nowarmup_reread)
 
 posterior_summary = posterior::summarise_draws(fit)
 print(dim(posterior_summary))
-write_json(posterior_summary, "8school_posterior_summary.json")
+print(posterior_summary)
+write_json(posterior_summary, paste(paste("posterior_summary", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
 
 
-res_nowarmup = extract(fit, permuted=FALSE, inc_warmup=FALSE)
-print(dim(res_nowarmup))
-output <- matrix(ncol=17, nrow=dim(res_nowarmup)[3])
+output <- matrix(ncol=17, nrow=dim(res_nowarmup_reread)[3])
 j = 0
-
-for (i in 1:dim(res_nowarmup)[3]) {
-  ary = matrix(c(res_nowarmup[1:100,1,i], res_nowarmup[1:100,2,i], res_nowarmup[1:100,3,i], res_nowarmup[1:100,4,i]), 100, 4)
+for (i in 1:dim(res_nowarmup_reread)[3]) {
+  ary = matrix(c(res_nowarmup_reread[1:100,1,i], res_nowarmup_reread[1:100,2,i], res_nowarmup_reread[1:100,3,i], res_nowarmup_reread[1:100,4,i]), 100, 4)
   j <- j + 1
   output[j,] <- c(
     posterior::rhat(ary),
@@ -71,5 +89,6 @@ colnames(df) <- c("rhat_rank",
                   "mcse_quantile01",
                   "mcse_quantile10",
                   "mcse_quantile30")
-write.csv(df, "reference_posterior.csv")
+write.csv(df, paste(paste("reference_posterior", env_name, sep="_", collapse=""), ".csv", sep=""))
+
 print(df)

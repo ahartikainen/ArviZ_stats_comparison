@@ -1,6 +1,6 @@
-import pystan
-
 import numpy as np
+
+import pystan
 
 np.set_printoptions(precision=16)
 

@@ -17,6 +17,8 @@ jobs:
         r-version: [4.0.2]
         use-git : [true, false]
       fail-fast: false
+    env:
+      USEGIT : ${{ matrix.use-git }}
     steps:
       - name: Checkout github
         uses: actions/checkout@v2
@@ -57,7 +59,7 @@ jobs:
           printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> "${HOME}/.R/Makevars"
           printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
           cat --show-all "${HOME}/.R/Makevars"
-          Rscript -e 'install.packages("posterior")'
+          Rscript -e 'install.packages("V8")'
           Rscript -e 'install.packages("remotes")'
           Rscript -e 'install.packages("jsonlite")'
 
@@ -96,15 +98,18 @@ jobs:
           python comparison_arviz.py
 
       - name: Visualization
-        env:
-            USEGIT : ${{ matrix.use-git }}
         run: |
-          python create_viz.py
+          python comparison_viz.py
 
       - uses: actions/upload-artifact@v2
         with:
           name: Upload results
           path: ./*.csv
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload sample
+          path: ./*.json
 
       - uses: actions/upload-artifact@v2
         with:
