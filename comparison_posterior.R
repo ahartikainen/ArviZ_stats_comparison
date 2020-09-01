@@ -3,6 +3,7 @@ library("posterior")
 library("jsonlite")
 
 options(mc.cores = parallel::detectCores())
+options(digits=16)
 
 rstan_options(auto_write = TRUE)
 
