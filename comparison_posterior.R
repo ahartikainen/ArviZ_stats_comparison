@@ -31,7 +31,8 @@ print(dim(res_nowarmup))
 write_json(res_nowarmup, paste(paste("8school_results_nowarmup", env_name, sep="_", collapse=""), ".json", sep=""), digits=16)
 
 res_nowarmup_reread <- read_json(paste(paste("8school_results_nowarmup", env_name, sep="_", collapse=""), ".json", sep=""))
-res_nowarmup_reread <- array(unlist(res_nowarmup_reread), dim(res_nowarmup))
+res_nowarmup_reread <- aperm(array(unlist(res_nowarmup_reread), rev(dim(res_nowarmup))))
+
 print("Dim res no warmup reread")
 print(dim(res_nowarmup_reread))
 
