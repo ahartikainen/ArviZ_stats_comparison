@@ -33,12 +33,12 @@ with open(f"posterior_summary_{env_name}.json") as f:
     res_posterior_summary = json.load(f)
 print(res_posterior_summary)
 print(type(res_posterior_summary))
-"""res_posterior_summary = pd.DataFrame.from_records(
+res_posterior_summary = pd.DataFrame.from_records(
     res_posterior_summary
 )
 res_posterior_summary.index.name = None
 print(res_posterior_summary)
-"""
+
 reference = (
     pd.read_csv(f"./reference_posterior_{env_name}.csv", index_col=0)
     .reset_index()
