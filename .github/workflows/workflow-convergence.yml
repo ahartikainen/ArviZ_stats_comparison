@@ -17,6 +17,8 @@ jobs:
         r-version: [4.0.2]
         use-git : [true, false]
       fail-fast: false
+    env:
+      USEGIT : ${{ matrix.use-git }}
     steps:
       - name: Checkout github
         uses: actions/checkout@v2
@@ -100,8 +102,6 @@ jobs:
           python comparison_arviz.py
 
       - name: Visualization
-        env:
-            USEGIT : ${{ matrix.use-git }}
         run: |
           python comparison_viz.py
 
