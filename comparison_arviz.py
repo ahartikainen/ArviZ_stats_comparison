@@ -39,7 +39,9 @@ res_posterior_summary.index.name = None
 print(res_posterior_summary)
 
 reference = (
-    pd.read_csv(f"./reference_posterior_{env_name}.csv", index_col=0)
+    pd.read_csv(
+        f"./reference_posterior_{env_name}.csv", index_col=0, float_precision="high"
+    )
     .reset_index()
     .astype(float)
 )
