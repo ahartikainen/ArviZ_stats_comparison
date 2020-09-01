@@ -73,7 +73,11 @@ hover_tool_ess = HoverTool(
 )
 
 hover_tool = HoverTool(
-    tooltips=[("function", "@diagnostic"), ("max", "@diff_max"), ("min", "@diff_min"),]
+    tooltips=[
+        ("function", "@diagnostic"),
+        ("max", "@diff_max"),
+        ("min", "@diff_min"),
+    ]
 )
 
 TOOLS_rhat = ["save", "pan", "reset", hover_tool_rhat, "ybox_zoom", "ywheel_zoom"]
