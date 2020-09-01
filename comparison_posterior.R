@@ -7,18 +7,11 @@ options(digits=16)
 
 rstan_options(auto_write = TRUE)
 
-print(Sys.getenv())
-print(Sys.getenv(x = "USEGIT"))
-print(Sys.getenv(x = "USEGIT") == "true")
-print(Sys.getenv(x = "USEGIT") == "false")
-print(Sys.getenv(x = "USEGIT") == TRUE)
-print(Sys.getenv(x = "USEGIT") == FALSE)
 if (Sys.getenv(x = "USEGIT") == "true") {
   env_name <- "git"
 } else {
     env_name <- "pypi-cran"
 }
-print(env_name)
 
 schools_dat <- list(J = 8,
                     y = c(28,  8, -3,  7, -1,  1, 18, 12),

@@ -45,7 +45,7 @@ comparison["group"] = comparison["diagnostic"].apply(
     if "ess" in x
     else "mcse"
     if "mcse" in x
-    else "WHAT"
+    else "WHAT {}".format(str(x))
 )
 for key, func in [
     ("diff_max", np.max),

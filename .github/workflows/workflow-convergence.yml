@@ -63,10 +63,6 @@ jobs:
           Rscript -e 'install.packages("remotes")'
           Rscript -e 'install.packages("jsonlite")'
 
-      - name: Debug
-        run: |
-          Rscript simple_test.R
-
       - name: Install R dependencies (cran)
         run: |
           Rscript -e 'install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)'
