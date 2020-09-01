@@ -1,5 +1,4 @@
 library("rstan")
-library("jsonlite")
 
 options(mc.cores = 1)
 rstan_options(auto_write = TRUE)

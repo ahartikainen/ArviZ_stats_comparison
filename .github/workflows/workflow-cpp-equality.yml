@@ -52,7 +52,7 @@ jobs:
           printf "\nCXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> "${HOME}/.R/Makevars"
           printf "\nCXX14=g++" >> "${HOME}/.R/Makevars"
           cat --show-all "${HOME}/.R/Makevars"
-          Rscript -e 'install.packages("posterior")'
+          Rscript -e 'install.packages("V8")'
           Rscript -e 'install.packages("remotes")'
           Rscript -e 'install.packages("jsonlite")'
 
