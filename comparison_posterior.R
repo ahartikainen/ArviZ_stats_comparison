@@ -18,6 +18,7 @@ if (Sys.getenv(x = "USEGIT") == "true") {
 } else {
     env_name <- "pypi-cran"
 }
+print(env_name)
 
 schools_dat <- list(J = 8,
                     y = c(28,  8, -3,  7, -1,  1, 18, 12),
@@ -44,6 +45,7 @@ print(dim(res_nowarmup_reread))
 
 print("difference between original and loaded < 1e-10")
 print(all(abs(res_nowarmup - res_nowarmup_reread) < 1e-10))
+print(res_nowarmup - res_nowarmup_reread)
 
 posterior_summary = posterior::summarise_draws(fit)
 print(dim(posterior_summary))
