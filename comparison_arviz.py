@@ -17,8 +17,8 @@ with open(f"8school_results_{env_name}.json") as f:
 res = np.array(res)
 print(res.shape)
 res = {"X": np.swapaxes(res, 0, 1)}
-res_warmup = {"X": res["X"][:, :-100, :]}
-res = {"X": res["X"][:, -100:, :]}
+res_warmup = {"X": res["X"][:, :-4000, :]}
+res = {"X": res["X"][:, -4000:, :]}
 print(res["X"].shape)
 print(res_warmup["X"].shape)
 idata = az.from_dict(res)
