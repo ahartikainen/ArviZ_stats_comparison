@@ -16,7 +16,7 @@ if (Sys.getenv(x = "USEGIT") == "true") {
 schools_dat <- list(J = 8,
                     y = c(28,  8, -3,  7, -1,  1, 18, 12),
 		    sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
-fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 4, iter = 300, warmup = 200, seed=123)
+fit <- stan(file = 'Stan-models/8schools.stan', data = schools_dat, chains = 4, iter = 5000, warmup = 1000, seed=123)
 print(fit)
 
 
@@ -49,7 +49,7 @@ write_json(posterior_summary, paste(paste("posterior_summary", env_name, sep="_"
 output <- matrix(ncol=17, nrow=dim(res_nowarmup_reread)[3])
 j = 0
 for (i in 1:dim(res_nowarmup_reread)[3]) {
-  ary = matrix(c(res_nowarmup_reread[1:100,1,i], res_nowarmup_reread[1:100,2,i], res_nowarmup_reread[1:100,3,i], res_nowarmup_reread[1:100,4,i]), 100, 4)
+  ary = matrix(c(res_nowarmup_reread[,1,i], res_nowarmup_reread[,2,i], res_nowarmup_reread[,3,i], res_nowarmup_reread[,4,i]), 4000, 4)
   j <- j + 1
   output[j,] <- c(
     posterior::rhat(ary),
