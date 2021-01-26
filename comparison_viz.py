@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import holoviews as hv
 import numpy as np
@@ -84,7 +85,7 @@ TOOLS_rhat = ["save", "pan", "reset", hover_tool_rhat, "ybox_zoom", "ywheel_zoom
 TOOLS_ess = ["save", "pan", "reset", hover_tool_ess, "ybox_zoom", "ywheel_zoom"]
 TOOLS_mcse = ["save", "pan", "reset", hover_tool, "ybox_zoom", "ywheel_zoom"]
 
-title = "rhat accuracy"
+title = f"rhat accuracy ({datetime.now().date().isoformat()})"
 boxwhisker = hv.BoxWhisker(
     comparison[comparison.group == "rhat"].rename(
         columns={"diff_min": "diff_min_rhat", "diff": "diff_rhat"}
@@ -102,7 +103,7 @@ boxwhisker.opts(
     xlabel="",
 )
 
-title = "ess"
+title = f"ess ({datetime.now().date().isoformat()})"
 boxwhisker2 = hv.BoxWhisker(
     comparison[comparison.group == "ess"].rename(
         columns={"diff_min": "diff_min_ess", "diff": "diff_ess"}
@@ -121,7 +122,7 @@ boxwhisker2.opts(
     xlabel="",
 )
 
-title = "mcse"
+title = f"mcse ({datetime.now().date().isoformat()})"
 boxwhisker3 = hv.BoxWhisker(
     comparison[comparison.group == "mcse"].rename(columns={"diff": "diff_mcse"}),
     ["diagnostic", "diff_min", "diff_max"],
