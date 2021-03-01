@@ -46,7 +46,7 @@ jobs:
         run: |
           pip install --upgrade pip wheel
           pip install numpy cython
-          pip install git+git://github.com/stan-dev/pystan.git
+          pip install git+git://github.com/stan-dev/pystan2.git
           pip install git+git://github.com/arviz-devs/arviz.git
           pip install holoviews bokeh
         if: matrix.use-git
