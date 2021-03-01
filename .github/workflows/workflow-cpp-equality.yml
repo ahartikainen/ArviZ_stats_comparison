@@ -40,7 +40,7 @@ jobs:
         run: |
           pip install --upgrade pip wheel
           pip install cython numpy
-          pip install git+git://github.com/stan-dev/pystan.git
+          pip install git+git://github.com/stan-dev/pystan2.git
           pip install git+git://github.com/arviz-devs/arviz.git
         if: matrix.use-git
 
