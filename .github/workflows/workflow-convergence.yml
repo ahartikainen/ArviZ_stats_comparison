@@ -38,7 +38,7 @@ jobs:
       - name: Install python dependencies (pip)
         run: |
           pip install --upgrade pip wheel
-          pip install arviz pystan
+          pip install arviz pystan~=2.19
           pip install holoviews bokeh
         if: "!matrix.use-git"
 
